@@ -7,7 +7,6 @@
 <meta name="description" content="Rahma Oshba: Computer Engineer and Cybersecurity GRC trainee (ISO/IEC 27001, NIST CSF, risk management, compliance and audit). Cairo, Egypt.">
 <meta property="og:title" content="Rahma Oshba · Junior Cybersecurity GRC Analyst">
 <meta property="og:description" content="ISO/IEC 27001 · NIST CSF · Risk management · Compliance & audit">
-<meta property="og:image" content="files/roaya_thumb.png">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='30' fill='%2313233f'/%3E%3Ctext x='32' y='41' font-family='Arial' font-weight='700' font-size='24' fill='%23ffffff' text-anchor='middle'%3ERO%3C/text%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -94,21 +93,6 @@ p { margin: 0; }
 .chip.progress { color: var(--progress); background: var(--progress-soft); }
 .chip.gold { color: #7a5406; background: #fbeccb; }
 
-/* featured project */
-.feature { display: grid; grid-template-columns: 1.1fr 1fr; background: var(--surface); border: 1px solid var(--line); border-radius: 14px; overflow: hidden; }
-.feature-img { position: relative; min-height: 260px; background: #0b2238 url("files/roaya_thumb.png") center 35% / cover no-repeat; }
-.feature-img::after { content: ""; position: absolute; inset: 0; background: linear-gradient(90deg, transparent 60%, var(--surface)); opacity: .0; }
-.feature-body { padding: 26px; display: grid; gap: 14px; align-content: start; }
-.feature h3 { font-size: 24px; font-weight: 800; font-stretch: 110%; }
-.feature h3 .ar { font-family: "Cairo", "DejaVu Sans", sans-serif; color: var(--gold); font-size: .8em; margin-inline-start: 6px; }
-.feature p { color: var(--muted); font-size: 15px; }
-.mini { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
-.mini div { background: var(--paper); border-radius: 10px; padding: 8px 10px; }
-.mini b { display: block; font-family: var(--font-display); font-size: 20px; color: var(--accent); }
-.mini span { font-size: 12px; color: var(--muted); }
-.links { display: flex; gap: 8px; flex-wrap: wrap; }
-.links a { font-size: 13px; font-weight: 600; text-decoration: none; padding: 7px 12px; border-radius: 999px; background: var(--accent-soft); }
-
 /* capability register */
 .register-wrap { overflow-x: auto; border: 1px solid var(--line); border-radius: 10px; background: var(--surface); }
 .register { width: 100%; border-collapse: collapse; min-width: 560px; font-size: 15px; }
@@ -164,8 +148,6 @@ p { margin: 0; }
   .rail { position: static; }
   .nav { display: none; }
   .name { font-size: 30px; }
-  .feature { grid-template-columns: 1fr; }
-  .feature-img { min-height: 190px; }
 }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation: none !important; transition: none !important; }
@@ -197,12 +179,11 @@ p { margin: 0; }
     </div>
     <nav class="nav" aria-label="Sections">
       <a href="#about"><span>01</span>About</a>
-      <a href="#featured"><span>02</span>Featured project</a>
-      <a href="#capabilities"><span>03</span>Capabilities</a>
-      <a href="#projects"><span>04</span>Projects</a>
-      <a href="#experience"><span>05</span>Experience</a>
-      <a href="#education"><span>06</span>Education</a>
-      <a href="#courses"><span>07</span>Courses</a>
+      <a href="#capabilities"><span>02</span>Capabilities</a>
+      <a href="#projects"><span>03</span>Projects</a>
+      <a href="#experience"><span>04</span>Experience</a>
+      <a href="#education"><span>05</span>Education</a>
+      <a href="#courses"><span>06</span>Courses</a>
     </nav>
     <button class="theme" id="theme" type="button">◐ Theme</button>
   </aside>
@@ -214,24 +195,6 @@ p { margin: 0; }
       <p class="text reveal">My technical background comes from a Postgraduate Diploma in Cybersecurity at Ain Shams University and courses in CCNA, CEH, NSE 4 and MCSA, so I understand the controls GRC teams review. Three years of teaching at BHI and AASTMT taught me to explain technical topics in simple words, write clear documentation and give structured feedback.</p>
     </section>
 
-    <section class="section" id="featured">
-      <div class="reveal"><p class="eyebrow">Featured project</p><h2>Planning a smart city, end to end</h2></div>
-      <article class="feature reveal">
-        <div class="feature-img" role="img" aria-label="Roaya project page with an illustrated smart city skyline"></div>
-        <div class="feature-body">
-          <div class="project-top"><span class="chip gold">Team capstone · NTI</span><span class="project-meta">Nov 2026</span></div>
-          <h3>Roaya <span class="ar">رؤية</span></h3>
-          <p>A six-person project management capstone: a 24-month plan to turn a city into a smart city. We built the charter, schedule and Gantt chart, resource allocation, a risk register with a 5×5 matrix, quality and communication plans, a final report and a short animated story video.</p>
-          <div class="mini"><div><b>24</b><span>months</span></div><div><b>550M</b><span>EGP budget</span></div><div><b>7</b><span>plans &amp; reports</span></div></div>
-          <div class="links">
-            <a href="https://rahmaoshba.github.io/RahmaOshba/" target="_blank" rel="noopener">Project page ↗</a>
-            <a href="https://rahmaoshba.github.io/RahmaOshba/#video" target="_blank" rel="noopener">Watch the video ↗</a>
-            <a href="https://rahmaoshba.github.io/RahmaOshba/files/Roaya_Risk_Management_Plan.pdf" target="_blank" rel="noopener">Risk plan (PDF) ↗</a>
-          </div>
-        </div>
-      </article>
-    </section>
-
     <section class="section" id="capabilities">
       <div class="reveal"><p class="eyebrow">Capability register</p><h2>What I can do, and the evidence behind it</h2></div>
       <div class="register-wrap reveal">
@@ -239,12 +202,12 @@ p { margin: 0; }
           <thead><tr><th>Area</th><th>Status</th><th>Evidence</th></tr></thead>
           <tbody>
             <tr><td class="area"><span class="id">CAP-01</span>Governance, risk &amp; compliance</td><td><span class="chip progress">In training</span></td><td class="evidence">NTI GRC Track: ISO 27001, NIST CSF and RMF, SOC 2, PCI DSS, GDPR, risk registers, mock audits</td></tr>
-            <tr><td class="area"><span class="id">CAP-02</span>Risk management</td><td><span class="chip solid">Solid</span></td><td class="evidence">Roaya capstone: risk register, probability × impact scoring, 5×5 matrix, responses and contingency plans</td></tr>
+            <tr><td class="area"><span class="id">CAP-02</span>Risk management</td><td><span class="chip solid">Solid</span></td><td class="evidence">NTI labs and team project: risk registers, probability × impact scoring, 5×5 matrix, treatment and contingency plans</td></tr>
             <tr><td class="area"><span class="id">CAP-03</span>Networking</td><td><span class="chip strong">Strong</span></td><td class="evidence">CCNA v7 course: TCP/IP, routing and switching, VLANs, ACLs, NAT</td></tr>
             <tr><td class="area"><span class="id">CAP-04</span>Security controls</td><td><span class="chip solid">Solid</span></td><td class="evidence">NSE 4 course: firewalls, VPN, IDS/IPS on Fortinet FortiGate</td></tr>
             <tr><td class="area"><span class="id">CAP-05</span>Security concepts</td><td><span class="chip solid">Solid</span></td><td class="evidence">CEH v13 course: CIA triad, encryption and hashing, common attacks, defense in depth</td></tr>
             <tr><td class="area"><span class="id">CAP-06</span>Systems &amp; access</td><td><span class="chip solid">Solid</span></td><td class="evidence">MCSA 2019 course: Active Directory, Group Policy, authentication and authorization</td></tr>
-            <tr><td class="area"><span class="id">CAP-07</span>Documentation &amp; reporting</td><td><span class="chip strong">Strong</span></td><td class="evidence">Three years designing exercises, assessment rubrics and written feedback; Roaya final report</td></tr>
+            <tr><td class="area"><span class="id">CAP-07</span>Documentation &amp; reporting</td><td><span class="chip strong">Strong</span></td><td class="evidence">Three years designing exercises, assessment rubrics and written feedback</td></tr>
           </tbody>
         </table>
       </div>
@@ -256,7 +219,7 @@ p { margin: 0; }
     </section>
 
     <section class="section" id="projects">
-      <div class="reveal"><p class="eyebrow">Projects</p><h2>More work</h2></div>
+      <div class="reveal"><p class="eyebrow">Projects</p><h2>Selected work</h2></div>
       <div class="projects">
         <article class="project reveal">
           <div class="project-top"><span class="chip progress">In progress</span><span class="project-meta">Oct 2026 – Jan 2027</span></div>
@@ -275,6 +238,12 @@ p { margin: 0; }
           <h3>Smart Glasses for Visually Impaired Users</h3>
           <p>Graduation project. I led the machine learning part: face recognition, OCR, object detection and text-to-speech.</p>
           <div class="tags"><span class="tag">Python</span><span class="tag">OpenCV</span><span class="tag">TensorFlow</span></div>
+        </article>
+        <article class="project reveal" style="--d:270ms">
+          <div class="project-top"><span class="chip strong">Completed</span><span class="project-meta">Team project · NTI</span></div>
+          <h3>Roaya: Smart City Project Plan</h3>
+          <p>Project management team project: charter, schedule, resource allocation, risk, quality and communication plans for a smart city. <a href="https://rahmaoshba.github.io/RahmaOshba/" target="_blank" rel="noopener">View project ↗</a></p>
+          <div class="tags"><span class="tag">Project planning</span><span class="tag">Risk register</span><span class="tag">Teamwork</span></div>
         </article>
       </div>
     </section>
