@@ -1,0 +1,266 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>To See · Smart Glasses for Blind People</title>
+<meta name="description" content="To See: smart glasses for blind people using machine learning and web technologies. Graduation project, Computer Engineering, 2023. Machine learning part by Rahma Oshba.">
+<meta property="og:title" content="To See · Smart Glasses for Blind People">
+<meta property="og:description" content="OCR · Object detection · Face recognition · Voice chat. Raspberry Pi 4 + machine learning.">
+<meta property="og:image" content="https://rahmaoshba.github.io/smart-glasses/img/render2.jpg">
+<link rel="icon" href="img/logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@100..125,500..800&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+:root {
+  --paper: #f5f7fa; --surface: #ffffff; --ink: #13233f; --muted: #56627a; --line: #d9dfe8;
+  --accent: #1f5fa8; --accent-soft: #e3edf8; --sky: #d9f0f6; --strong: #1d7a55;
+  --font-display: "Archivo", "Helvetica Neue", Arial, sans-serif;
+  --font-body: "IBM Plex Sans", "Segoe UI", Arial, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, Menlo, Consolas, monospace;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --paper: #0e1626; --surface: #152034; --ink: #e8edf5; --muted: #9aa7bd; --line: #26334b;
+    --accent: #7fb2ec; --accent-soft: #1a2d49; --sky: #17304a; --strong: #6fd1a3; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --paper: #0e1626; --surface: #152034; --ink: #e8edf5; --muted: #9aa7bd; --line: #26334b;
+  --accent: #7fb2ec; --accent-soft: #1a2d49; --sky: #17304a; --strong: #6fd1a3; color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--paper); color: var(--ink); font-family: var(--font-body); font-size: 16px; line-height: 1.6;
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+a { color: var(--accent); text-underline-offset: 3px; }
+a:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 4px; }
+h1, h2, h3 { font-family: var(--font-display); text-wrap: balance; margin: 0; }
+p { margin: 0; }
+img, video { max-width: 100%; display: block; }
+.wrap { max-width: 1080px; margin: 0 auto; padding-block: 28px 64px; }
+.top { display: flex; justify-content: space-between; align-items: center; gap: 12px; font-family: var(--font-mono); font-size: 13px; }
+.top a { text-decoration: none; }
+
+.hero { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap: 40px; align-items: center; margin-top: 36px; }
+.kicker { font-family: var(--font-mono); font-size: 12.5px; letter-spacing: .12em; text-transform: uppercase; color: var(--accent); }
+.hero h1 { font-size: clamp(34px, 5.4vw, 56px); line-height: 1.02; font-weight: 800; font-stretch: 110%; margin-top: 10px; }
+.hero .sub { font-size: 18px; color: var(--muted); margin-top: 14px; max-width: 52ch; }
+.meta { display: grid; grid-template-columns: auto 1fr; gap: 6px 16px; margin-top: 22px; font-size: 14.5px; }
+.meta dt { font-family: var(--font-mono); font-size: 12.5px; color: var(--muted); padding-top: 2px; }
+.meta dd { margin: 0; }
+.btns { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 24px; }
+.btn { display: inline-flex; align-items: center; gap: 8px; padding: 10px 16px; border-radius: 10px; font-weight: 600; font-size: 15px; text-decoration: none; border: 1px solid var(--line); background: var(--surface); color: var(--ink); }
+.btn.primary { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+.btn:hover { border-color: var(--accent); }
+.hero-img { border-radius: 18px; overflow: hidden; background: #3b0000; aspect-ratio: 16 / 10; }
+.hero-img img { width: 100%; height: 100%; object-fit: cover; object-position: 30% 50%; }
+
+section { margin-top: 64px; }
+.sec-head { display: flex; align-items: baseline; gap: 14px; margin-bottom: 20px; }
+.sec-head .n { font-family: var(--font-mono); font-size: 13px; color: var(--accent); }
+.sec-head h2 { font-size: 26px; font-weight: 750; }
+.lead { color: var(--muted); max-width: 70ch; margin-bottom: 22px; }
+
+.role { background: var(--sky); border-radius: 16px; padding: 22px 24px; display: grid; grid-template-columns: auto 1fr; gap: 18px; align-items: start; }
+.role .badge { font-family: var(--font-mono); font-size: 12px; background: var(--ink); color: var(--paper); padding: 4px 10px; border-radius: 999px; white-space: nowrap; }
+.role ul { margin: 8px 0 0; padding-left: 20px; }
+
+.features { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; }
+.feat { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 18px; }
+.feat svg { width: 28px; height: 28px; color: var(--accent); }
+.feat h3 { font-size: 17px; margin-top: 10px; }
+.feat p { font-size: 14.5px; color: var(--muted); margin-top: 4px; }
+
+.how { display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr); gap: 18px; align-items: start; }
+.panel { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; overflow: hidden; }
+.panel img { width: 100%; }
+.panel.white { background: #fff; }
+.cap { font-size: 13.5px; color: var(--muted); padding: 10px 14px; border-top: 1px solid var(--line); background: var(--surface); }
+.stack { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 18px; }
+.chip { font-family: var(--font-mono); font-size: 12.5px; padding: 4px 10px; border-radius: 999px; background: var(--accent-soft); color: var(--accent); }
+
+.videos { display: grid; grid-template-columns: 1fr 1fr 0.55fr; gap: 14px; align-items: start; }
+.videos video { width: 100%; background: #000; }
+
+.gallery { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; }
+.gallery figure { margin: 0; border-radius: 12px; overflow: hidden; background: var(--surface); border: 1px solid var(--line); }
+.gallery img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; }
+.gallery .wide { grid-column: span 2; }
+.gallery .wide img { aspect-ratio: 8 / 3; }
+.gallery figcaption { font-size: 13px; color: var(--muted); padding: 8px 12px; }
+
+.docs { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; }
+.doc { display: flex; flex-direction: column; background: var(--surface); border: 1px solid var(--line); border-radius: 14px; overflow: hidden; text-decoration: none; color: inherit; transition: transform .15s, border-color .15s; }
+.doc:hover { transform: translateY(-2px); border-color: var(--accent); }
+.doc .th { height: 170px; background: var(--accent-soft); display: flex; align-items: center; justify-content: center; overflow: hidden; }
+.doc .th img { height: 100%; width: auto; max-width: none; }
+.doc .th.land img { width: 100%; height: 100%; object-fit: cover; }
+.doc .b { padding: 14px 16px; }
+.doc h3 { font-size: 16px; }
+.doc p { font-size: 13.5px; color: var(--muted); margin-top: 2px; }
+.doc .dl { font-family: var(--font-mono); font-size: 12.5px; color: var(--accent); margin-top: 8px; }
+
+.team { columns: 2; column-gap: 28px; padding: 0; margin: 0; list-style: none; }
+.team li { padding: 8px 0; border-bottom: 1px solid var(--line); break-inside: avoid; display: flex; justify-content: space-between; gap: 10px; }
+.team li span { font-size: 13px; color: var(--muted); }
+.team li.me { font-weight: 600; }
+.team li.me span { color: var(--accent); }
+.super { margin-top: 14px; color: var(--muted); }
+
+.archive { margin-top: 64px; background: var(--ink); color: var(--paper); border-radius: 18px; padding: 28px; display: flex; justify-content: space-between; align-items: center; gap: 20px; flex-wrap: wrap; }
+.archive h2 { font-size: 22px; }
+.archive p { opacity: .8; margin-top: 4px; }
+.archive .btn { background: var(--paper); color: var(--ink); border-color: var(--paper); }
+footer { margin-top: 36px; font-family: var(--font-mono); font-size: 12.5px; color: var(--muted); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 10px; }
+
+@media (max-width: 860px) {
+  .hero, .how { grid-template-columns: 1fr; }
+  .features, .docs, .gallery { grid-template-columns: 1fr 1fr; }
+  .videos { grid-template-columns: 1fr; }
+  .videos .phone { max-width: 320px; }
+}
+@media (max-width: 520px) {
+  .features, .docs { grid-template-columns: 1fr; }
+  .gallery .wide { grid-column: span 2; }
+  .team { columns: 1; }
+  .role { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="top">
+    <a href="/">← Rahma Oshba · Portfolio</a>
+    <span>Graduation project · 2023</span>
+  </div>
+
+  <header class="hero">
+    <div>
+      <p class="kicker">Computer Engineering · Graduation project</p>
+      <h1>To See: smart glasses for blind people</h1>
+      <p class="sub">A wearable camera on a pair of glasses, controlled by a small joystick. It reads text, describes objects, recognises faces and lets the user chat by voice, using machine learning and web technologies.</p>
+      <dl class="meta">
+        <dt>Institute</dt><dd>Behera Higher Institute of Engineering &amp; Technology</dd>
+        <dt>Department</dt><dd>Computer Engineering</dd>
+        <dt>Supervisor</dt><dd>Dr. Khaled Saada</dd>
+        <dt>Date</dt><dd>June 2023 · team of 10</dd>
+        <dt>My part</dt><dd><b>Machine learning</b></dd>
+      </dl>
+      <div class="btns">
+        <a class="btn primary" href="files/ToSee_Presentation.pdf" target="_blank" rel="noopener">View presentation</a>
+        <a class="btn" href="files/ToSee_Research_Paper.pdf" target="_blank" rel="noopener">Read the paper</a>
+        <a class="btn" href="#demos">Watch demos</a>
+      </div>
+    </div>
+    <div class="hero-img"><img src="img/render1.jpg" alt="3D render of the To See glasses with the camera module on the right arm"></div>
+  </header>
+
+  <section>
+    <div class="sec-head"><span class="n">01</span><h2>My role</h2></div>
+    <div class="role">
+      <span class="badge">Machine learning</span>
+      <div>
+        <p>I worked on the machine learning part: the models that turn what the camera sees into words the user can hear.</p>
+        <ul>
+          <li>Text reading (OCR) with PaddleOCR</li>
+          <li>Object detection with YOLOv8</li>
+          <li>Face recognition with TensorFlow, Keras and OpenCV</li>
+          <li>Text-to-speech so every result is read aloud</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head"><span class="n">02</span><h2>What it does</h2></div>
+    <div class="features">
+      <div class="feat">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7V5h16v2M9 19h6M12 5v14"/></svg>
+        <h3>Reads text</h3><p>Point at a sign, a label or a page and the glasses read it aloud.</p>
+      </div>
+      <div class="feat">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 8V4h4M17 4h4v4M21 16v4h-4M7 20H3v-4"/><rect x="8" y="8" width="8" height="8" rx="1"/></svg>
+        <h3>Finds objects</h3><p>Names the objects in front of the user in real time.</p>
+      </div>
+      <div class="feat">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="9" r="4"/><path d="M4 21c1.5-4 4.5-6 8-6s6.5 2 8 6"/></svg>
+        <h3>Knows faces</h3><p>Recognises saved family and friends and says who is there.</p>
+      </div>
+      <div class="feat">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z"/><path d="M9 11v2M12 9v6M15 11v2"/></svg>
+        <h3>Voice chat</h3><p>Sends photos and voice notes, and reads new messages aloud.</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head"><span class="n">03</span><h2>How it works</h2></div>
+    <p class="lead">A Raspberry Pi 4 with an 8 MP camera captures the image. A Flask API runs the machine learning models, a .NET Core server stores the data in the cloud, and a React website and a Flutter app let sighted family members talk to the user.</p>
+    <div class="how">
+      <figure class="panel" style="margin:0;background:#000"><img src="img/architecture.png" alt="System architecture: Raspberry Pi with camera, Flask API for machine learning, .NET main server, SQL database, Cloudinary, React website and Flutter app" loading="lazy"><figcaption class="cap">System architecture</figcaption></figure>
+      <figure class="panel white" style="margin:0"><img src="img/joystick.png" alt="Joystick controls: each direction starts OCR, object detection, face recognition, sending a photo or a voice note" loading="lazy"><figcaption class="cap">One joystick controls every feature</figcaption></figure>
+    </div>
+    <div class="stack">
+      <span class="chip">Python</span><span class="chip">TensorFlow</span><span class="chip">Keras</span><span class="chip">OpenCV</span><span class="chip">YOLOv8</span><span class="chip">PaddleOCR</span><span class="chip">Flask</span><span class="chip">Raspberry Pi 4</span><span class="chip">.NET Core</span><span class="chip">React.js</span><span class="chip">Flutter</span><span class="chip">SQL Server</span><span class="chip">3D design</span>
+    </div>
+  </section>
+
+  <section id="demos">
+    <div class="sec-head"><span class="n">04</span><h2>Demos</h2></div>
+    <div class="videos">
+      <figure class="panel" style="margin:0"><video controls preload="none" playsinline poster="img/poster_ocr_test.jpg"><source src="video/ocr_test.mp4" type="video/mp4"></video><figcaption class="cap">Live test on the Raspberry Pi: reading the text on a product box</figcaption></figure>
+      <figure class="panel" style="margin:0"><video controls preload="none" playsinline poster="img/poster_chat_tts.jpg"><source src="video/chat_tts.mp4" type="video/mp4"></video><figcaption class="cap">Chat: a message from the website is read aloud on the glasses</figcaption></figure>
+      <figure class="panel phone" style="margin:0"><video controls preload="none" playsinline poster="img/poster_app.jpg"><source src="video/app.mp4" type="video/mp4"></video><figcaption class="cap">The Flutter app</figcaption></figure>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head"><span class="n">05</span><h2>The glasses</h2></div>
+    <div class="gallery">
+      <figure><img src="img/photo1.jpg" alt="The finished glasses with the camera module" loading="lazy"><figcaption>Final prototype</figcaption></figure>
+      <figure><img src="img/photo2.jpg" alt="Side view of the prototype" loading="lazy"><figcaption>Camera on the right arm</figcaption></figure>
+      <figure><img src="img/photo3.jpg" alt="Prototype from another angle" loading="lazy"><figcaption>Prototype</figcaption></figure>
+      <figure><img src="img/photo4.jpg" alt="Top view of the glasses and camera cable" loading="lazy"><figcaption>Camera and cable</figcaption></figure>
+      <figure class="wide"><img src="img/render1.jpg" alt="3D render of the glasses on a head model" loading="lazy"><figcaption>3D design of the glasses</figcaption></figure>
+      <figure class="wide"><img src="img/render3.jpg" alt="3D render of the joystick ring" loading="lazy"><figcaption>3D design of the joystick ring</figcaption></figure>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head"><span class="n">06</span><h2>Documents</h2></div>
+    <div class="docs">
+      <a class="doc" href="files/ToSee_Presentation.pdf" target="_blank" rel="noopener"><div class="th land"><img src="img/thumb_Presentation.jpg" alt="" loading="lazy"></div><div class="b"><h3>Presentation</h3><p>Defence slides · 44 pages</p><p class="dl">PDF · 3.3 MB ↗</p></div></a>
+      <a class="doc" href="files/ToSee_Graduation_Book.pdf" target="_blank" rel="noopener"><div class="th"><img src="img/thumb_Graduation_Book.jpg" alt="" loading="lazy"></div><div class="b"><h3>Graduation book</h3><p>Full project report · 117 pages</p><p class="dl">PDF · 6.9 MB ↗</p></div></a>
+      <a class="doc" href="files/ToSee_Research_Paper.pdf" target="_blank" rel="noopener"><div class="th"><img src="img/thumb_Research_Paper.jpg" alt="" loading="lazy"></div><div class="b"><h3>Research paper</h3><p>Paper draft · 13 pages</p><p class="dl">PDF · 0.5 MB ↗</p></div></a>
+      <a class="doc" href="files/ToSee_App_Design.pdf" target="_blank" rel="noopener"><div class="th"><img src="img/thumb_App_Design.jpg" alt="" loading="lazy"></div><div class="b"><h3>App design</h3><p>UI / UX screens · 25 pages</p><p class="dl">PDF · 5.5 MB ↗</p></div></a>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head"><span class="n">07</span><h2>Team</h2></div>
+    <ul class="team">
+      <li>Ahmed Elnizilly</li>
+      <li>Youssef El-Shehemy</li>
+      <li>Mohamed El-Zarka</li>
+      <li>Ahmed Ghanem</li>
+      <li>Alaa Elmaghlany</li>
+      <li>Manal Saaed</li>
+      <li class="me">Rahma Oshba <span>Machine learning</span></li>
+      <li>Mohamed Beshara</li>
+      <li>Mohamed Basiony</li>
+      <li>Sondos El-Safy</li>
+    </ul>
+    <p class="super">Supervised by Dr. Khaled Saada.</p>
+  </section>
+
+  <div class="archive">
+    <div><h2>Full project archive</h2><p>Source files, models, videos and design files on Google Drive.</p></div>
+    <a class="btn" href="https://drive.google.com/drive/folders/177JuCrlEJ-JPUzbsU2mbfIdm0yS0ZTyY" target="_blank" rel="noopener">Open the Drive folder ↗</a>
+  </div>
+
+  <footer><a href="/">rahmaoshba.github.io</a><span>To See · 2023</span></footer>
+</div>
+</body>
+</html>
